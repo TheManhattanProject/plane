@@ -8,9 +8,11 @@ from django.db.models import Exists, OuterRef, Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.gzip import gzip_page
 
+
 # Third party imports
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 
 from plane.app.permissions import ProjectEntityPermission
 from plane.app.serializers import (
@@ -286,6 +288,36 @@ class PageViewSet(BaseViewSet):
 
         page.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PagesDescriptionViewSet(BaseViewSet):
+    parser_classes = [MultiPartParser]
+
+    def partial_update(self, request, slug, project_id, pk):
+        page = Page.objects.get(
+            pk=pk, workspace__slug=slug, project_id=project_id
+        )
+
+        # Extract the binary data from the request
+        uploaded_file = request.FILES.get("description_yjs")
+
+        # If the file is not None, read its content
+        if uploaded_file is not None:
+            binary_data = uploaded_file.read()
+
+            # Save binary data to description_yjs field
+            page.description_yjs = binary_data
+            page.save()
+
+            return Response(
+                PageDetailSerializer(page).data, status=status.HTTP_200_OK
+            )
+        else:
+            # Handle case where no file is provided in the request
+            return Response(
+                {"error": "No file provided for description_yjs"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class PageFavoriteViewSet(BaseViewSet):

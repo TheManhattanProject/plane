@@ -12,40 +12,42 @@ async function updateById(
   workspaceSlug: string,
   projectId: string,
   pageId: string,
-  data: Uint8Array,
+  data: Uint8Array
 ) {
-  const accessToken = "";
+  const accessToken =
+    "";
 
   const baseURL = "http://127.0.0.1:8000"; // Adjust the base URL as needed
-  const url = `${baseURL}/api/workspaces/${workspaceSlug}/projects/${projectId}/pages/${pageId}/`;
+  const url = `${baseURL}/api/workspaces/${workspaceSlug}/projects/${projectId}/pages/${pageId}/description/`;
 
   // const base64Data = bufferToBase64(data);
 
   console.log("----------------------", data);
+
+  const formData = new FormData();
+  formData.append("description_yjs", new Blob([data]));
+
   try {
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({
-        // description_html: base64Data,
-        description_yjs: data,
-      }),
+      body: formData,
     });
 
     if (!response.ok) {
       const errorBody = await response.text(); // Attempt to read the response text
+      console.log("errorBody", errorBody);
       try {
         const errorJson = JSON.parse(errorBody); // Try to parse it as JSON
         console.error(
           `HTTP error! Status: ${response.status}, Body:`,
-          errorJson,
+          errorJson
         );
       } catch {
         console.error(
-          `HTTP error! Status: ${response.status}, Body: ${errorBody}`,
+          `HTTP error! Status: ${response.status}, Body: ${errorBody}`
         );
       }
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -61,13 +63,14 @@ async function updateById(
 async function fetchById(
   workspaceSlug: string,
   projectId: string,
-  pageId: string,
+  pageId: string
 ) {
   const baseURL = "http://localhost:8000";
   // const accessToken =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0NzM5MzEyLCJpYXQiOjE3MTIxNDczMTIsImp0aSI6IjU3MjY0MmFiMTBkMTQyYWFiNjBmN2FjYzQ4NjdiZmJjIiwidXNlcl9pZCI6IjM0YTRjMzgxLTg5NzctNGM4MC1iMjZjLTNhZGZkMzU2YjI4MSJ9.PvvSWBDTyOv80oa5gEBOkvXuVYYeGaNmwnFqR_H2FuM"; // Replace with your actual access token retrieval logic
 
-  const accessToken = "";
+  const accessToken =
+    "";
 
   const url = `${baseURL}/api/workspaces/${workspaceSlug}/projects/${projectId}/pages/${pageId}/`;
 
@@ -86,12 +89,12 @@ async function fetchById(
         const errorJson = JSON.parse(errorBody); // Try to parse it as JSON
         console.error(
           `HTTP error! Status: ${response.status}, Body:`,
-          errorJson,
+          errorJson
         );
       } catch {
         // If it's not JSON or not parsable, log the text directly
         console.error(
-          `HTTP error! Status: ${response.status}, Body: ${errorBody}`,
+          `HTTP error! Status: ${response.status}, Body: ${errorBody}`
         );
       }
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -101,7 +104,7 @@ async function fetchById(
 
     const final = generateJSON(
       ans.description_html,
-      CoreEditorExtensionsWithoutProps(),
+      CoreEditorExtensionsWithoutProps()
     );
 
     return final;
@@ -142,7 +145,7 @@ const server = Server.configure({
           const res = await updateById(
             "image-tes",
             "205c36c8-f9a5-47bc-8a80-d8fbc7800f6a",
-            "d43e838c-b683-4538-acaa-67fdb9f9639e",
+            "d43e838c-b683-4538-acaa-67fdb9f9639e"
             // encodedState,
           );
           console.log(res);

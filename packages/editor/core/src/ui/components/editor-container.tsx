@@ -64,6 +64,7 @@ export const EditorContainer: FC<EditorContainerProps> = (props) => {
         editorContainerClassName
       )}
     >
+      <p className="color-red-100">{editor?.storage.collaborationCursor?.users?.length}</p>
       {children}
     </div>
   );

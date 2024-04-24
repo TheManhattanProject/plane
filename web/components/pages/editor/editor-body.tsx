@@ -38,6 +38,7 @@ type Props = {
   handleEditorReady: (value: boolean) => void;
   handleReadOnlyEditorReady: (value: boolean) => void;
   updateMarkings: (description_html: string) => void;
+  pageId: string;
 };
 
 export const PageEditorBody: React.FC<Props> = observer((props) => {
@@ -53,6 +54,7 @@ export const PageEditorBody: React.FC<Props> = observer((props) => {
     swrPageDetails,
     sidePeekVisible,
     updateMarkings,
+    pageId,
   } = props;
   // router
   const router = useRouter();
@@ -123,6 +125,7 @@ export const PageEditorBody: React.FC<Props> = observer((props) => {
               control={control}
               render={({ field: { onChange } }) => (
                 <DocumentEditorWithRef
+                  id={pageId}
                   fileHandler={{
                     cancel: fileService.cancelUpload,
                     delete: fileService.getDeleteImageFunction(workspaceId),

@@ -11,9 +11,16 @@
   ],
   "exports": {
     ".": {
+      "require": "./dist/index.js",
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs",
       "module": "./dist/index.mjs"
+    },
+    "./lib": {
+      "require": "./dist/lib.js",
+      "types": "./dist/lib.d.mts",
+      "import": "./dist/lib.mjs",
+      "module": "./dist/lib.mjs"
     }
   },
   "scripts": {
@@ -72,7 +79,7 @@
     "tailwind-config-custom": "*",
     "tsconfig": "*",
     "tsup": "^7.2.0",
-    "typescript": "4.9.5"
+    "typescript": "^5.4.5"
   },
   "keywords": [
     "editor",

@@ -40,6 +40,7 @@ export abstract class APIService {
   }
 
   get(url: string, config = {}): Promise<any> {
+    console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", this.getHeaders());
     return axios({
       method: "get",
       url: this.baseURL + url,

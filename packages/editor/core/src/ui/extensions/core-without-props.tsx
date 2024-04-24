@@ -11,58 +11,22 @@ import { TableCell } from "src/ui/extensions/table/table-cell/table-cell";
 import { TableHeader } from "src/ui/extensions/table/table-header/table-header";
 import { TableRow } from "src/ui/extensions/table/table-row/table-row";
 
-import { ImageExtension } from "src/ui/extensions/image";
-
 import { isValidHttpUrl } from "src/lib/utils";
-import { Mentions } from "src/ui/mentions";
 
 import { CustomCodeBlockExtension } from "src/ui/extensions/code";
 import { ListKeymap } from "src/ui/extensions/custom-list-keymap";
 import { CustomKeymap } from "src/ui/extensions/keymap";
 import { CustomQuoteExtension } from "src/ui/extensions/quote";
 
-import { DeleteImage } from "src/types/delete-image";
-import { IMentionHighlight, IMentionSuggestion } from "src/types/mention-suggestion";
-import { RestoreImage } from "src/types/restore-image";
 import { CustomLinkExtension } from "src/ui/extensions/custom-link";
 import { CustomCodeInlineExtension } from "src/ui/extensions/code-inline";
 import { CustomTypographyExtension } from "src/ui/extensions/typography";
 import { CustomHorizontalRule } from "src/ui/extensions/horizontal-rule/horizontal-rule";
 import { CustomCodeMarkPlugin } from "src/ui/extensions/custom-code-inline/inline-code-plugin";
-import { UploadImage } from "src/types/upload-image";
-import { DropHandlerExtension } from "src/ui/extensions/drop";
-import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
-import Collaboration from "@tiptap/extension-collaboration";
-import { HocuspocusProvider } from "@hocuspocus/provider";
-type TArguments = {
-  mentionConfig: {
-    mentionSuggestions?: () => Promise<IMentionSuggestion[]>;
-    mentionHighlights?: () => Promise<IMentionHighlight[]>;
-  };
-  fileConfig: {
-    deleteFile: DeleteImage;
-    restoreFile: RestoreImage;
-    cancelUploadImage?: () => void;
-    uploadFile: UploadImage;
-  };
-  placeholder?: string | ((isFocused: boolean) => string);
-  provider: HocuspocusProvider;
-};
+import { MentionsWithoutProps } from "../mentions/mention-without-props";
+import { ImageExtensionWithoutProps } from "./image/image-extension-without-props";
 
-function getRandomUser() {
-  const users = [
-    { name: "Akash", color: "#f783ac", someProp: "heey" },
-    { name: "Palani", color: "#4caf50" },
-  ];
-  return users[Math.floor(Math.random() * users.length)];
-}
-
-export const CoreEditorExtensions = ({
-  mentionConfig,
-  fileConfig: { deleteFile, restoreFile, cancelUploadImage, uploadFile },
-  placeholder,
-  provider,
-}: TArguments) => {
+export const CoreEditorExtensionsWithoutProps = () => {
   return [
     StarterKit.configure({
       bulletList: {
@@ -90,15 +54,8 @@ export const CoreEditorExtensions = ({
         width: 1,
       },
     }),
-    Collaboration.configure({
-      document: provider.document,
-    }),
-    CollaborationCursor.configure({
-      provider: provider,
-      user: getRandomUser(),
-    }),
     CustomQuoteExtension,
-    DropHandlerExtension(uploadFile),
+    // DropHandlerExtension(uploadFile),
     CustomHorizontalRule.configure({
       HTMLAttributes: {
         class: "my-4 border-custom-border-400",
@@ -118,7 +75,7 @@ export const CoreEditorExtensions = ({
       },
     }),
     CustomTypographyExtension,
-    ImageExtension(deleteFile, restoreFile, cancelUploadImage).configure({
+    ImageExtensionWithoutProps().configure({
       HTMLAttributes: {
         class: "rounded-md",
       },
@@ -151,11 +108,7 @@ export const CoreEditorExtensions = ({
     TableHeader,
     TableCell,
     TableRow,
-    Mentions({
-      mentionSuggestions: mentionConfig.mentionSuggestions,
-      mentionHighlights: mentionConfig.mentionHighlights,
-      readonly: false,
-    }),
+    MentionsWithoutProps(),
     Placeholder.configure({
       placeholder: ({ editor, node }) => {
         if (node.type.name === "heading") return `Heading ${node.attrs.level}`;
@@ -163,11 +116,6 @@ export const CoreEditorExtensions = ({
         const shouldHidePlaceholder =
           editor.isActive("table") || editor.isActive("codeBlock") || editor.isActive("image");
         if (shouldHidePlaceholder) return "";
-
-        if (placeholder) {
-          if (typeof placeholder === "string") return placeholder;
-          else return placeholder(editor.isFocused);
-        }
 
         return "Press '/' for commands...";
       },

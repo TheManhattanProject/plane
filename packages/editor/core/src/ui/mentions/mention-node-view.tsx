@@ -2,13 +2,13 @@
 // @ts-nocheck
 import { NodeViewWrapper } from "@tiptap/react";
 import { cn } from "src/lib/utils";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { IMentionHighlight } from "src/types/mention-suggestion";
 import { useEffect, useState } from "react";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export const MentionNodeView = (props) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [highlightsState, setHighlightsState] = useState<IMentionHighlight[]>();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const MentionNodeView = (props) => {
 
   const handleClick = () => {
     if (!props.extension.options.readonly) {
-      router.push(props.node.attrs.redirect_uri);
+      // router.push(props.node.attrs.redirect_uri);
     }
   };
 

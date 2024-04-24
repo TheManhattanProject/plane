@@ -129,6 +129,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
             />
           )}
           <PageEditorBody
+            pageId={pageId?.toString() ?? ""}
             swrPageDetails={swrPageDetails}
             control={control}
             editorRef={editorRef}

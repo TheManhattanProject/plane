@@ -1,5 +1,5 @@
 import { useEditor as useCustomEditor, Editor } from "@tiptap/react";
-import { useImperativeHandle, useRef, MutableRefObject, useState, useEffect } from "react";
+import { useImperativeHandle, useRef, MutableRefObject, useState, useEffect, useMemo } from "react";
 import { CoreEditorProps } from "src/ui/props";
 import { CoreEditorExtensions } from "src/ui/extensions";
 import { EditorProps } from "@tiptap/pm/view";
@@ -13,6 +13,8 @@ import { insertContentAtSavedSelection } from "src/helpers/insert-content-at-cur
 import { EditorMenuItemNames, getEditorMenuItems } from "src/ui/menus/menu-items";
 import { EditorRefApi } from "src/types/editor-ref-api";
 import { IMarking, scrollSummary } from "src/helpers/scroll-to-node";
+import { HocuspocusProvider } from "@hocuspocus/provider";
+import { useOutputGenerator } from "./transform-stuff";
 
 interface CustomEditorProps {
   id?: string;
@@ -54,6 +56,13 @@ export const useEditor = ({
   mentionHandler,
   placeholder,
 }: CustomEditorProps) => {
+  const provider = useMemo(() => {
+    console.log("connection established");
+    return new HocuspocusProvider({
+      url: "ws://127.0.0.1:1234/collaboration",
+      name: id,
+    });
+  }, []);
   const editor = useCustomEditor({
     editorProps: {
       ...CoreEditorProps(editorClassName),
@@ -72,6 +81,7 @@ export const useEditor = ({
           uploadFile,
         },
         placeholder,
+        provider,
       }),
       ...extensions,
     ],
@@ -90,6 +100,9 @@ export const useEditor = ({
     },
   });
 
+  const outputInHTML = useOutputGenerator(editor?.getJSON());
+  // __AUTO_GENERATED_PRINT_VAR_START__
+  console.log("useEditor outputInHTML: %s", outputInHTML === editor?.getHTML()); // __AUTO_GENERATED_PRINT_VAR_END__
   const editorRef: MutableRefObject<Editor | null> = useRef(null);
 
   const [savedSelection, setSavedSelection] = useState<Selection | null>(null);
@@ -101,6 +114,14 @@ export const useEditor = ({
   useEffect(() => {
     savedSelectionRef.current = savedSelection;
   }, [savedSelection]);
+
+  // // Handle editor and provider cleanup
+  useEffect(() => {
+    return () => {
+      editor?.destroy();
+      provider.disconnect();
+    };
+  }, []);
 
   // Effect for syncing SWR data
   useEffect(() => {

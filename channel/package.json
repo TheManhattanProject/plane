@@ -6,15 +6,19 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon dist/index.js"
   },
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hocuspocus/extension-database": "^2.11.3",
     "@hocuspocus/extension-logger": "^2.11.3",
     "@hocuspocus/server": "^2.11.3",
+    "@hocuspocus/transformer": "^2.11.3",
+    "@plane/editor-core": "*",
+    "@tiptap/html": "^2.3.0",
     "debounce": "^2.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

@@ -13,6 +13,7 @@ import { DocumentEditorExtensions } from "src/ui/extensions";
 import { PageRenderer } from "src/ui/components/page-renderer";
 
 interface IDocumentEditor {
+  id: string;
   initialValue: string;
   value?: string;
   fileHandler: {
@@ -47,6 +48,7 @@ const DocumentEditor = (props: IDocumentEditor) => {
     forwardedRef,
     tabIndex,
     placeholder,
+    id,
   } = props;
   // states
   const [hideDragHandleOnMouseLeave, setHideDragHandleOnMouseLeave] = useState<() => void>(() => {});
@@ -58,6 +60,7 @@ const DocumentEditor = (props: IDocumentEditor) => {
   };
   // use editor
   const editor = useEditor({
+    id,
     onChange(json, html) {
       onChange(json, html);
     },

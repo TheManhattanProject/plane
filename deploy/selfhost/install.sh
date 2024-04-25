@@ -346,7 +346,7 @@ function askForAction() {
 CPU_ARCH=$(uname -m)
 if [[ $CPU_ARCH == "amd64" || $CPU_ARCH == "x86_64" || ( $BRANCH == "master" && ( $CPU_ARCH == "arm64" || $CPU_ARCH == "aarch64" ) ) ]]; 
 then
-    USE_GLOBAL_IMAGES=1
+    USE_GLOBAL_IMAGES=0
     DOCKERHUB_USER=makeplane
     PULL_POLICY=always
 else

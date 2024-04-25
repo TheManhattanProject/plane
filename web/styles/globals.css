@@ -33,7 +33,7 @@
     --color-primary-70: 121, 159, 255;
     --color-primary-80: 101, 145, 255;
     --color-primary-90: 82, 132, 255;
-    --color-primary-100: 63, 118, 255;
+    --color-primary-100: 216, 40, 40;
     --color-primary-200: 57, 106, 230;
     --color-primary-300: 50, 94, 204;
     --color-primary-400: 44, 83, 179;
@@ -189,9 +189,9 @@
   [data-theme="dark-contrast"] {
     color-scheme: dark !important;
 
-    --color-background-100: 25, 25, 25; /* primary bg */
-    --color-background-90: 32, 32, 32; /* secondary bg */
-    --color-background-80: 44, 44, 44; /* tertiary bg */
+    --color-background-100: 26, 26, 26; /* primary bg */
+    --color-background-90: 37, 37, 37; /* secondary bg */
+    --color-background-80: 50, 50, 50; /* tertiary bg */
 
     --color-shadow-2xs: 0px 0px 1px 0px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
     --color-shadow-xs: 0px 0px 2px 0px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
@@ -287,7 +287,7 @@
     --color-primary-70: 121, 159, 255;
     --color-primary-80: 101, 145, 255;
     --color-primary-90: 82, 132, 255;
-    --color-primary-100: 63, 118, 255;
+    --color-primary-100: 216, 40, 40;
     --color-primary-200: 57, 106, 230;
     --color-primary-300: 50, 94, 204;
     --color-primary-400: 44, 83, 179;

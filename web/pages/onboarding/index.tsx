@@ -42,7 +42,7 @@ const OnboardingPage: NextPageWithLayout = observer(() => {
   const { currentUser, currentUserLoader, updateCurrentUser, updateUserOnBoard } = useUser();
   const { workspaces, fetchWorkspaces } = useWorkspace();
   // custom hooks
-  const {} = useUserAuth({ routeAuth: "onboarding", user: currentUser, isLoading: currentUserLoader });
+  const { } = useUserAuth({ routeAuth: "onboarding", user: currentUser, isLoading: currentUserLoader });
 
   const user = currentUser ?? undefined;
   const workspacesList = Object.values(workspaces ?? {});
@@ -151,7 +151,7 @@ const OnboardingPage: NextPageWithLayout = observer(() => {
             <div className="flex w-full items-center justify-between font-semibold ">
               <div className="flex items-center gap-x-1 text-3xl">
                 <Image src={BluePlaneLogoWithoutText} alt="Plane Logo" height={30} width={30} />
-                Plane
+                PodiumPe
               </div>
 
               <div>

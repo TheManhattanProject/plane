@@ -6,7 +6,7 @@
 </a>
 </p>
 
-<h3 align="center"><b>Plane</b></h3>
+<h3 align="center"><b>PodiumPe</b></h3>
 <p align="center"><b>Open-source project management that unlocks customer value.</b></p>
 
 <p align="center">

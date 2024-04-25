@@ -1,5 +1,6 @@
 # Python imports
 import json
+import base64
 from datetime import datetime
 
 # Django imports
@@ -7,12 +8,13 @@ from django.db import connection
 from django.db.models import Exists, OuterRef, Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.gzip import gzip_page
+from django.http import StreamingHttpResponse, HttpResponse
 
 
 # Third party imports
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser
+
 
 from plane.app.permissions import ProjectEntityPermission
 from plane.app.serializers import (
@@ -291,33 +293,37 @@ class PageViewSet(BaseViewSet):
 
 
 class PagesDescriptionViewSet(BaseViewSet):
-    parser_classes = [MultiPartParser]
+    # parser_classes = [FileUploadParser]
+    def retrieve(self, request, slug, project_id, pk):
+        page = Page.objects.get(
+            pk=pk, workspace__slug=slug, project_id=project_id
+        )
+        binary_data = page.description_yjs
+
+        def stream_data():
+            yield binary_data
+
+        response = StreamingHttpResponse(
+            stream_data(), content_type="application/octet-stream"
+        )
+        response["Content-Disposition"] = (
+            'attachment; filename="page_description.bin"'
+        )
+        return response
 
     def partial_update(self, request, slug, project_id, pk):
         page = Page.objects.get(
             pk=pk, workspace__slug=slug, project_id=project_id
         )
+        base64_data = request.data.get("description_yjs")
 
-        # Extract the binary data from the request
-        uploaded_file = request.FILES.get("description_yjs")
-
-        # If the file is not None, read its content
-        if uploaded_file is not None:
-            binary_data = uploaded_file.read()
-
-            # Save binary data to description_yjs field
+        if base64_data:
+            binary_data = base64.b64decode(base64_data)
             page.description_yjs = binary_data
             page.save()
-
-            return Response(
-                PageDetailSerializer(page).data, status=status.HTTP_200_OK
-            )
+            return Response({"message": "Updated successfully"})
         else:
-            # Handle case where no file is provided in the request
-            return Response(
-                {"error": "No file provided for description_yjs"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"error": "No binary data provided"})
 
 
 class PageFavoriteViewSet(BaseViewSet):

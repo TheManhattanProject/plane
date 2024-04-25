@@ -170,6 +170,7 @@ function startServices() {
 
     local api_container_id=$(docker container ls -q -f "name=plane-app-api")
     local idx2=0
+
     while ! docker logs $api_container_id 2>&1 | grep -m 1 -i "Application startup complete" | grep -q ".";
     do
         local message=">> Waiting for API Service to Start"

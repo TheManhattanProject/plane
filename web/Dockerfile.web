@@ -66,3 +66,7 @@ RUN chmod +x /usr/local/bin/start.sh
 ENV NEXT_TELEMETRY_DISABLED 1
 
 EXPOSE 3000
+
+RUN echo "Starting Plane Frontend.."
+
+ENTRYPOINT node web/server.js web

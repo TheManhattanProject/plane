@@ -3,7 +3,7 @@ FROM python:3.11.1-alpine3.17 AS backend
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1 
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /code
 
@@ -48,5 +48,4 @@ RUN chmod -R 777 /code
 # Expose container port and run entry point script
 EXPOSE 8000
 
-# CMD [ "./bin/takeoff" ]
-
+ENTRYPOINT [ "./bin/takeoff" ]

@@ -24,24 +24,25 @@
   :root {
     color-scheme: light !important;
 
-    --color-primary-10: 236, 241, 255;
-    --color-primary-20: 217, 228, 255;
-    --color-primary-30: 197, 214, 255;
-    --color-primary-40: 178, 200, 255;
-    --color-primary-50: 159, 187, 255;
-    --color-primary-60: 140, 173, 255;
-    --color-primary-70: 121, 159, 255;
-    --color-primary-80: 101, 145, 255;
-    --color-primary-90: 82, 132, 255;
-    --color-primary-100: 216, 40, 40;
-    --color-primary-200: 57, 106, 230;
-    --color-primary-300: 50, 94, 204;
-    --color-primary-400: 44, 83, 179;
-    --color-primary-500: 38, 71, 153;
-    --color-primary-600: 32, 59, 128;
-    --color-primary-700: 25, 47, 102;
-    --color-primary-800: 19, 35, 76;
-    --color-primary-900: 13, 24, 51;
+    --color-primary-10: 249, 198, 198;
+    --color-primary-20: 246, 175, 175;
+    --color-primary-30: 243, 153, 153;
+    --color-primary-40: 239, 132, 132;
+    --color-primary-50: 235, 110, 110;
+    --color-primary-60: 230, 89, 89;
+    --color-primary-70: 225, 69, 69;
+    --color-primary-80: 220, 49, 49;
+    --color-primary-90: 214, 29, 29;
+    --color-primary-100: 187, 33, 33;
+    --color-primary-200: 161, 36, 36;
+    --color-primary-300: 136, 38, 38;
+    --color-primary-400: 114, 38, 38;
+    --color-primary-500: 92, 36, 36;
+    --color-primary-600: 72, 33, 33;
+    --color-primary-700: 54, 29, 29;
+    --color-primary-800: 37, 23, 23;
+    --color-primary-900: 21, 15, 15;
+    
 
     --color-background-100: 255, 255, 255; /* primary bg */
     --color-background-90: 247, 247, 247; /* secondary bg */

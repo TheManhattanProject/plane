@@ -54,6 +54,7 @@ def magic_link(email, key, token, current_site):
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
+        print("Email sen t..........")
         logging.getLogger("plane").info("Email sent successfully.")
         return
     except Exception as e:

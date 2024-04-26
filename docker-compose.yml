@@ -43,6 +43,42 @@ services:
     depends_on:
       - plane-db
       - plane-redis
+  
+  worker:
+    container_name: bgworker
+    build:
+      context: ./apiserver
+      dockerfile: Dockerfile.api
+      args:
+        DOCKER_BUILDKIT: 1
+    restart: always
+    command: ./bin/worker
+    networks:
+      - prod_network
+    env_file:
+      - ./apiserver/.env
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
+
+  beat-worker:
+    container_name: beatworker
+    build:
+      context: ./apiserver
+      dockerfile: Dockerfile.api
+      args:
+        DOCKER_BUILDKIT: 1
+    restart: always
+    command: ./bin/beat
+    networks:
+      - prod_network
+    env_file:
+      - ./apiserver/.env
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
 
   plane-db:
     container_name: plane-db

@@ -309,7 +309,7 @@ class MagicGenerateEndpoint(BaseAPIView):
         # If the smtp is configured send through here
         current_site = request.META.get("HTTP_ORIGIN")
         magic_link.delay(email, key, token, current_site)
-
+        print("sending email.............")
         return Response({"key": key}, status=status.HTTP_200_OK)
 
 
@@ -414,6 +414,7 @@ class EmailCheckEndpoint(BaseAPIView):
                 )
             # Trigger the email
             magic_link.delay(email, "magic_" + str(email), token, current_site)
+            print("Below email 1.........")
             return Response(
                 {
                     "is_password_autoset": user.is_password_autoset,
@@ -453,7 +454,10 @@ class EmailCheckEndpoint(BaseAPIView):
                     )
 
                 # Trigger the email
+                print("Below email 2-1........")\
+                
                 magic_link.delay(email, key, token, current_site)
+                print("Below email 2........")
                 return Response(
                     {
                         "is_password_autoset": user.is_password_autoset,

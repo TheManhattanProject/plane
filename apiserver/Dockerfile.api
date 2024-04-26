@@ -48,4 +48,4 @@ RUN chmod -R 777 /code
 # Expose container port and run entry point script
 EXPOSE 8000
 
-ENTRYPOINT [ "./bin/takeoff" ]
+# ENTRYPOINT [ "./bin/takeoff" ]
